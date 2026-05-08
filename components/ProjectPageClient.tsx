@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { Project } from "@/data/projects";
+
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -171,21 +172,21 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                 {project.media.map((item, i) => (
                   <div key={i} className="flex flex-col gap-2">
                     {item.type === "image" && (
-                      <div className="group relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 cursor-zoom-in">
-                        <Image
-                          src={`/projects/${project.slug}/${item.file}`}
+                      <div className="group aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 cursor-zoom-in">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`${BASE}/projects/${project.slug}/${item.file}`}
                           alt={item.caption ?? `${project.title} — image ${i + 1}`}
-                          fill className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                       </div>
                     )}
                     {item.type === "video" && (
-                      <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-900">
+                      <div className="aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-900">
                         <video
-                          src={`/projects/${project.slug}/${item.file}`}
+                          src={`${BASE}/projects/${project.slug}/${item.file}`}
                           controls
-                          className="w-full h-full object-cover"
+                          className="w-full h-full"
                         />
                       </div>
                     )}

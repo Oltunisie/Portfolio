@@ -89,8 +89,8 @@ On the test side, I built the cold-flow test setup, led the hydrostatic proof te
 The system is on track to support a full static fire campaign ahead of the launch targeting the 20,000 ft altitude record — which would be the highest apogee in Rocket Project UCLA's history.`,
 
     media: [
-      { type: "image", file: "IMG_0755.jpg" },
-      { type: "image", file: "IMG_0804.jpg" },
+      { type: "image", file: "FeedSystems_HF2.jpg" },
+      { type: "image", file: "HF2_group.jpg" },
     ],
   },
 

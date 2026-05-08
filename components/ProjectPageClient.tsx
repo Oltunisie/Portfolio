@@ -163,42 +163,52 @@ export default function ProjectPageClient({ project }: { project: Project }) {
         )}
 
         {/* Gallery */}
-        <motion.section {...fadeUp(0.16)}>
-          <SectionLabel index="06" label="Gallery" />
-          <div className="pl-0 md:pl-12">
-            {project.images && project.images.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {project.images.map((img, i) => (
-                  <div key={i} className="group relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 cursor-zoom-in">
-                    <Image
-                      src={`/projects/${project.slug}/${img}`}
-                      alt={`${project.title} — image ${i + 1}`}
-                      fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+        {(project.media && project.media.length > 0) && (
+          <motion.section {...fadeUp(0.16)}>
+            <SectionLabel index="06" label="Gallery" />
+            <div className="pl-0 md:pl-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {project.media.map((item, i) => (
+                  <div key={i} className="flex flex-col gap-2">
+                    {item.type === "image" && (
+                      <div className="group relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 cursor-zoom-in">
+                        <Image
+                          src={`/projects/${project.slug}/${item.file}`}
+                          alt={item.caption ?? `${project.title} — image ${i + 1}`}
+                          fill className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                      </div>
+                    )}
+                    {item.type === "video" && (
+                      <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-900">
+                        <video
+                          src={`/projects/${project.slug}/${item.file}`}
+                          controls
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    {item.type === "youtube" && (
+                      <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${item.id}`}
+                          title={item.caption ?? `${project.title} — video ${i + 1}`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="absolute inset-0 w-full h-full"
+                        />
+                      </div>
+                    )}
+                    {item.caption && (
+                      <p className="text-slate-400 dark:text-slate-500 text-xs text-center leading-relaxed">{item.caption}</p>
+                    )}
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center hover:border-slate-300 dark:hover:border-slate-700 transition-colors duration-300">
-                <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-4">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-400">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
-                  </svg>
-                </div>
-                <p className="text-slate-400 dark:text-slate-600 text-sm">
-                  Drop images in{" "}
-                  <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-xs font-mono">
-                    public/projects/{project.slug}/
-                  </code>
-                  {" "}and list them in{" "}
-                  <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-xs font-mono">data/projects.ts</code>
-                </p>
-              </div>
-            )}
-          </div>
-        </motion.section>
+            </div>
+          </motion.section>
+        )}
 
       </div>
 

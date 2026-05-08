@@ -3,6 +3,11 @@ export type ProcessStep = {
   description: string;
 };
 
+export type MediaItem =
+  | { type: "image"; file: string; caption?: string }
+  | { type: "video"; file: string; caption?: string }    // local .mp4/.webm in public/projects/<slug>/
+  | { type: "youtube"; id: string; caption?: string };   // YouTube video ID e.g. "dQw4w9WgXcQ"
+
 export type Project = {
   slug: string;
   title: string;
@@ -13,12 +18,13 @@ export type Project = {
   period?: string;
   status?: string;
   // ── Project page sections ──────────────────────────────────────
-  problem?: string;          // The challenge / motivation
+  problem?: string;
   goals?: string[];
-  myRole?: string;           // Your specific contribution
+  myRole?: string;
   process?: ProcessStep[];
-  outcome?: string;          // Results, current state, impact
-  images?: string[];         // filenames in public/projects/<slug>/
+  outcome?: string;
+  // Drop files in public/projects/<slug>/ then list them here
+  media?: MediaItem[];
 };
 
 export const projects: Project[] = [
@@ -82,7 +88,7 @@ On the test side, I built the cold-flow test setup, led the hydrostatic proof te
 
 The system is on track to support a full static fire campaign ahead of the launch targeting the 20,000 ft altitude record — which would be the highest apogee in Rocket Project UCLA's history.`,
 
-    images: [],
+    media: [],
   },
 
   {
@@ -138,7 +144,7 @@ I developed and assembled the ADCS test bench, which allows us to validate senso
 
 The system represents one of the most technically complex subsystems on the satellite, and the work is building a strong foundation for BruinSpace's next mission.`,
 
-    images: [],
+    media: [],
   },
 
   {
@@ -193,7 +199,7 @@ I designed the data acquisition system used to log sensor data during the parabo
 
 The win earned two of our students a flight aboard the CNES Zero-G aircraft, and positioned the club for two consecutive Young Searchers Prize victories in the years that followed. It remains one of the most formative engineering and leadership experiences of my career so far.`,
 
-    images: [],
+    media: [],
   },
 
   {
@@ -242,6 +248,6 @@ In both winning years, I led the final jury presentation. In 2025, I was invited
 
 The 2024 win was especially meaningful because it connected directly to real experimental work — the proposal was grounded in data and experience from the CNES Zero-G campaign, not just theory.`,
 
-    images: [],
+    media: [],
   },
 ];

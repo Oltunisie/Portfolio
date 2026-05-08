@@ -32,16 +32,18 @@ export default function About() {
             className="space-y-5"
           >
             <p className="text-slate-600 leading-relaxed text-lg font-light">
-              I&apos;m an Aerospace Engineering student at UCLA, passionate about the intersection
-              of physics, mathematics, and real-world engineering challenges.
+              I&apos;m an Aerospace Engineering student at UCLA with hands-on experience leading
+              propulsion and spacecraft systems projects.
             </p>
             <p className="text-slate-500 leading-relaxed">
-              [Placeholder — add a sentence about your focus area: propulsion, structures,
-              aerodynamics, guidance systems, etc.]
+              From designing a 586 lbf hybrid rocket feed system to leading the ADCS subsystem
+              for a CubeSat, I enjoy turning rigorous analysis into real hardware — through FEA
+              validation, hydrostatic testing, cold-flow, and static fire campaigns.
             </p>
             <p className="text-slate-500 leading-relaxed">
-              [Placeholder — mention any research, clubs, internships, or goals you want
-              visitors to know about.]
+              Before UCLA, I led an astronomy club to international recognition, competed in the
+              National Informatics Olympiads, and flew experiments aboard a CNES Zero-G parabolic
+              flight.
             </p>
           </motion.div>
 
@@ -61,11 +63,11 @@ export default function About() {
             </div>
             <div className="border-l-2 border-blue-900/20 pl-6">
               <p className="text-xs text-slate-400 tracking-widest uppercase mb-1">Expected Graduation</p>
-              <p className="text-slate-700 font-medium">[Year]</p>
+              <p className="text-slate-700 font-medium">2028 · GPA 4.0</p>
             </div>
             <div className="border-l-2 border-blue-900/20 pl-6">
-              <p className="text-xs text-slate-400 tracking-widest uppercase mb-1">Interests</p>
-              <p className="text-slate-700 font-medium">[Propulsion / Aerodynamics / Structures / GNC]</p>
+              <p className="text-xs text-slate-400 tracking-widest uppercase mb-1">Focus Areas</p>
+              <p className="text-slate-700 font-medium">Propulsion · Structures · ADCS · Feed Systems</p>
             </div>
           </motion.div>
         </div>

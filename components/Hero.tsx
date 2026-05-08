@@ -2,11 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import ParticleBackground from "./ParticleBackground";
 
 // ─── CUSTOMIZE HERE ───────────────────────────────────────────────
-// Drop your photo into the /public folder and update the filename below.
-// Adjust blurAmount (px) and overlayOpacity (0 = fully transparent, 1 = solid white)
-// to tune how much the image shows through.
 const BG_IMAGE = "/hero-bg.jpg";
 const BLUR_AMOUNT = "6px";
 const OVERLAY_OPACITY = 0.55;
@@ -16,8 +14,11 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden bg-gradient-to-br from-slate-100 via-white to-blue-50">
 
-      {/* Background image with blur */}
-      <div className="absolute inset-0 scale-110">
+      {/* Particle constellation background */}
+      <ParticleBackground />
+
+      {/* Background image with blur (shows when hero-bg.jpg is added to /public) */}
+      <div className="absolute inset-0 scale-110" style={{ zIndex: 0 }}>
         <Image
           src={BG_IMAGE}
           alt="Hero background"
@@ -25,13 +26,14 @@ export default function Hero() {
           priority
           className="object-cover"
           style={{ filter: `blur(${BLUR_AMOUNT})` }}
+          onError={() => {}}
         />
       </div>
 
-      {/* White overlay to keep text readable */}
+      {/* Overlay */}
       <div
         className="absolute inset-0"
-        style={{ backgroundColor: `rgba(255, 255, 255, ${OVERLAY_OPACITY})` }}
+        style={{ backgroundColor: `rgba(255, 255, 255, ${OVERLAY_OPACITY})`, zIndex: 2 }}
       />
 
       {/* Content */}
@@ -56,14 +58,14 @@ export default function Hero() {
           transition={{ delay: 0.3, duration: 0.7 }}
           className="text-6xl md:text-8xl font-light text-slate-900 tracking-tight mb-6"
         >
-         Omar Lemkecher
+          Omar Lemkecher
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
-          className="text-xl text-slate-400 font-light max-w-md mx-auto mb-10"
+          className="text-xl text-slate-500 font-light max-w-md mx-auto mb-10"
         >
           Building the future of flight — one equation at a time.
         </motion.p>
@@ -72,7 +74,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.5 }}
-          className="flex gap-4 justify-center"
+          className="flex flex-wrap gap-4 justify-center"
         >
           <button
             onClick={() =>
@@ -82,11 +84,24 @@ export default function Hero() {
           >
             View Projects
           </button>
+          <a
+            href="/Portfolio/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-3 bg-blue-900 text-white text-sm tracking-wide rounded-full hover:bg-blue-800 transition-colors duration-300 flex items-center gap-2"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Resume
+          </a>
           <button
             onClick={() =>
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
             }
-            className="px-8 py-3 border border-white/60 backdrop-blur-sm text-slate-700 text-sm tracking-wide rounded-full hover:bg-white/40 transition-colors duration-300"
+            className="px-8 py-3 border border-slate-300 text-slate-600 text-sm tracking-wide rounded-full hover:border-slate-500 transition-colors duration-300"
           >
             Get in Touch
           </button>

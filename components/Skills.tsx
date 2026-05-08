@@ -6,16 +6,24 @@ import { useRef } from "react";
 
 const skillGroups = [
   {
-    category: "Engineering",
-    skills: ["Aerodynamics", "Propulsion", "Structural Analysis", "Flight Mechanics", "CFD"],
+    category: "Propulsion & Fluids",
+    skills: ["Hybrid Rocket Feed Systems", "N₂O Thermodynamics", "Discharge Coefficient Modeling", "Ullage Optimization", "Pressure Vessel Design", "CFD Basics"],
+  },
+  {
+    category: "Structures & Analysis",
+    skills: ["FEA (ANSYS, SolidWorks)", "Stress Analysis", "Bracket & Endcap Design", "Bolt Analysis", "Hydrostatic Testing"],
   },
   {
     category: "Software & Tools",
-    skills: ["MATLAB", "Python", "C++", "ANSYS", "SolidWorks", "OpenFOAM"],
+    skills: ["Python", "C++", "SolidWorks", "Fusion 360", "Onshape", "ANSYS"],
   },
   {
-    category: "Methods",
-    skills: ["FEA", "Numerical Methods", "Control Systems", "Signal Processing", "LaTeX"],
+    category: "Fabrication",
+    skills: ["CNC Machining", "CAM", "3D Printing", "Instrumentation Integration", "Cold-Flow Testing"],
+  },
+  {
+    category: "Languages",
+    skills: ["English", "French", "Arabic"],
   },
 ];
 
@@ -39,13 +47,13 @@ export default function Skills() {
           </h2>
         </motion.div>
 
-        <div className="space-y-12">
+        <div className="space-y-10">
           {skillGroups.map((group, gi) => (
             <motion.div
               key={group.category}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.15 * gi }}
+              transition={{ duration: 0.6, delay: 0.12 * gi }}
             >
               <p className="text-xs text-slate-400 tracking-widest uppercase mb-4">
                 {group.category}
@@ -56,7 +64,7 @@ export default function Skills() {
                     key={skill}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.4, delay: 0.15 * gi + 0.05 * si }}
+                    transition={{ duration: 0.3, delay: 0.12 * gi + 0.04 * si }}
                     className="px-4 py-2 bg-white border border-slate-200 text-slate-600 text-sm rounded-full hover:border-blue-900/30 hover:text-blue-900 transition-colors duration-200"
                   >
                     {skill}

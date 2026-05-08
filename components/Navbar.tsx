@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const links = ["About", "Projects", "Skills", "Contact"];
+const links = ["About", "Experience", "Projects", "Skills", "Contact"];
 
 export default function Navbar() {
   const scrollTo = (id: string) => {

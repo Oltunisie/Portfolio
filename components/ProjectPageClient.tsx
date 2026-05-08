@@ -17,7 +17,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
 
       {/* Top bar */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
-        <Link href="/Portfolio/"
+        <Link href="/"
           className="group flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             className="group-hover:-translate-x-1 transition-transform duration-200">
@@ -171,7 +171,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                 {project.images.map((img, i) => (
                   <div key={i} className="group relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 cursor-zoom-in">
                     <Image
-                      src={`/Portfolio/projects/${project.slug}/${img}`}
+                      src={`/projects/${project.slug}/${img}`}
                       alt={`${project.title} — image ${i + 1}`}
                       fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     />
@@ -204,7 +204,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
 
       {/* Footer */}
       <div className="border-t border-slate-100 dark:border-slate-800 py-12 px-6 text-center">
-        <Link href="/Portfolio/"
+        <Link href="/"
           className="group inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             className="group-hover:-translate-x-1 transition-transform duration-200">

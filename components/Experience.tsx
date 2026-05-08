@@ -49,7 +49,7 @@ export default function Experience() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="experience" className="py-32 px-6 bg-white dark:bg-[#080d1a] texture-paper relative">
+    <section id="experience" className="py-32 px-6 bg-white dark:bg-[#080d1a] texture-paper texture-dots relative">
       <div className="max-w-4xl mx-auto" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 24 }} animate={isInView ? { opacity: 1, y: 0 } : {}}

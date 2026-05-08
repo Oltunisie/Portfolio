@@ -27,7 +27,7 @@ export default function Projects() {
               transition={{ duration: 0.5, delay: 0.1 * i }}
               whileHover={{ y: -4 }}
             >
-              <Link href={`/Portfolio/projects/${project.slug}/`} className="block h-full group border border-slate-100 dark:border-slate-800 rounded-2xl p-7 bg-white dark:bg-[#080d1a] hover:border-slate-200 dark:hover:border-slate-700 hover:shadow-lg dark:hover:shadow-slate-950/50 transition-all duration-300">
+              <Link href={`/projects/${project.slug}/`} className="block h-full group border border-slate-100 dark:border-slate-800 rounded-2xl p-7 bg-white dark:bg-[#080d1a] hover:border-slate-200 dark:hover:border-slate-700 hover:shadow-lg dark:hover:shadow-slate-950/50 transition-all duration-300">
 
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">

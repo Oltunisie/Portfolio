@@ -43,22 +43,22 @@ html {
 
 /* Fine dot grid — light */
 .texture-dots {
-  background-image: radial-gradient(circle, rgba(15, 23, 42, 0.055) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(15, 23, 42, 0.12) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 .dark .texture-dots {
-  background-image: radial-gradient(circle, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(148, 163, 184, 0.13) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
 /* Paper grain texture */
 .texture-paper {
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
 }
 .dark .texture-paper {
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
 }
 
 /* Fine crosshatch grid */

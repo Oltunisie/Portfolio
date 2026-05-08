@@ -25,3 +25,62 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   transition: background 0.3s ease, color 0.3s ease;
 }
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ── Background textures ───────────────────────────────────────── */
+
+/* Fine dot grid — light */
+.texture-dots {
+  background-image: radial-gradient(circle, rgba(15, 23, 42, 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.dark .texture-dots {
+  background-image: radial-gradient(circle, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Paper grain texture */
+.texture-paper {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+.dark .texture-paper {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+/* Fine crosshatch grid */
+.texture-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.dark .texture-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(30, 58, 95, 0.12);
+  color: #0f172a;
+}
+.dark ::selection {
+  background: rgba(96, 165, 250, 0.2);
+  color: #e2e8f0;
+}

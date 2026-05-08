@@ -14,7 +14,7 @@ const OVERLAY_OPACITY = 0.55;
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden bg-gradient-to-br from-slate-100 via-white to-blue-50">
 
       {/* Background image with blur */}
       <div className="absolute inset-0 scale-110">

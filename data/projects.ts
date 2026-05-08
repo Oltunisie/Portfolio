@@ -91,6 +91,7 @@ The system is on track to support a full static fire campaign ahead of the launc
     media: [
       { type: "image", file: "FeedSystems_HF2.jpg" },
       { type: "image", file: "HF2_group.jpg" },
+      { type: "video", file: "HF2.mp4" },
     ],
   },
 

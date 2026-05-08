@@ -32,7 +32,7 @@ export default function About() {
             {[
               { label: "University", value: "UCLA — University of California, Los Angeles" },
               { label: "Degree", value: "B.S. Aerospace Engineering" },
-              { label: "Expected Graduation", value: "2028 · GPA 4.0" },
+              { label: "Expected Graduation", value: "2029" },
               { label: "Focus Areas", value: "Propulsion · Structures · ADCS · Feed Systems" },
             ].map((item) => (
               <div key={item.label} className="border-l-2 border-blue-900/20 dark:border-blue-500/30 pl-6">

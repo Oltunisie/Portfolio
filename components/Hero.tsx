@@ -1,20 +1,40 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+
+// ─── CUSTOMIZE HERE ───────────────────────────────────────────────
+// Drop your photo into the /public folder and update the filename below.
+// Adjust blurAmount (px) and overlayOpacity (0 = fully transparent, 1 = solid white)
+// to tune how much the image shows through.
+const BG_IMAGE = "/hero-bg.jpg";
+const BLUR_AMOUNT = "6px";
+const OVERLAY_OPACITY = 0.55;
+// ──────────────────────────────────────────────────────────────────
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-white relative overflow-hidden">
-      {/* Subtle background grid */}
+    <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+
+      {/* Background image with blur */}
+      <div className="absolute inset-0 scale-110">
+        <Image
+          src={BG_IMAGE}
+          alt="Hero background"
+          fill
+          priority
+          className="object-cover"
+          style={{ filter: `blur(${BLUR_AMOUNT})` }}
+        />
+      </div>
+
+      {/* White overlay to keep text readable */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#1e3a5f 1px, transparent 1px), linear-gradient(90deg, #1e3a5f 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
+        className="absolute inset-0"
+        style={{ backgroundColor: `rgba(255, 255, 255, ${OVERLAY_OPACITY})` }}
       />
 
+      {/* Content */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -66,7 +86,7 @@ export default function Hero() {
             onClick={() =>
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
             }
-            className="px-8 py-3 border border-slate-200 text-slate-600 text-sm tracking-wide rounded-full hover:border-slate-400 transition-colors duration-300"
+            className="px-8 py-3 border border-white/60 backdrop-blur-sm text-slate-700 text-sm tracking-wide rounded-full hover:bg-white/40 transition-colors duration-300"
           >
             Get in Touch
           </button>
@@ -78,13 +98,13 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
       >
-        <span className="text-xs text-slate-300 tracking-widest uppercase">Scroll</span>
+        <span className="text-xs text-slate-400 tracking-widest uppercase">Scroll</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-slate-300 to-transparent"
+          className="w-px h-8 bg-gradient-to-b from-slate-400 to-transparent"
         />
       </motion.div>
     </section>

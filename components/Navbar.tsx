@@ -21,7 +21,7 @@ export default function Navbar() {
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         className="text-slate-800 font-semibold tracking-tight text-lg hover:text-blue-900 transition-colors"
       >
-        Oltunisie
+        Omar Lemkecher
       </button>
       <ul className="flex gap-8">
         {links.map((link) => (

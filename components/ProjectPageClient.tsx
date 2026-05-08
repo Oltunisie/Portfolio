@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Project } from "@/data/projects";
+import { Project, MediaItem } from "@/data/projects";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -12,6 +13,210 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.65, delay },
 });
 
+// ── Carousel + Lightbox ───────────────────────────────────────────
+function MediaGallery({ items, slug, title }: { items: MediaItem[]; slug: string; title: string }) {
+  const [index, setIndex] = useState(0);
+  const [dir, setDir] = useState(0);
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
+  const go = useCallback((next: number) => {
+    setDir(next > index ? 1 : -1);
+    setIndex(next);
+  }, [index]);
+
+  const prev = () => go((index - 1 + items.length) % items.length);
+  const next = () => go((index + 1) % items.length);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (lightbox !== null) {
+        if (e.key === "Escape") setLightbox(null);
+        if (e.key === "ArrowRight") setLightbox((l) => l !== null ? (l + 1) % items.length : l);
+        if (e.key === "ArrowLeft")  setLightbox((l) => l !== null ? (l - 1 + items.length) % items.length : l);
+        return;
+      }
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft")  prev();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [index, lightbox, items.length]);
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    document.body.style.overflow = lightbox !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [lightbox]);
+
+  const variants = {
+    enter: (d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit:  (d: number) => ({ x: d > 0 ? "-100%" : "100%", opacity: 0 }),
+  };
+
+  const current = items[index];
+
+  return (
+    <>
+      {/* ── Carousel ── */}
+      <div className="relative select-none">
+        {/* Main slide */}
+        <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
+          <AnimatePresence initial={false} custom={dir} mode="wait">
+            <motion.div
+              key={index}
+              custom={dir}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.38 }}
+              className="absolute inset-0"
+            >
+              <MediaSlide item={current} slug={slug} title={title} index={index}
+                onImageClick={() => setLightbox(index)} />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Arrows — only show if more than 1 item */}
+          {items.length > 1 && (
+            <>
+              <button onClick={prev}
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 hover:scale-110 transition-all duration-200 shadow-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button onClick={next}
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 hover:scale-110 transition-all duration-200 shadow-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </>
+          )}
+
+          {/* Image counter */}
+          {items.length > 1 && (
+            <div className="absolute bottom-3 right-3 z-10 text-xs bg-black/40 text-white px-2 py-1 rounded-full backdrop-blur-sm font-mono">
+              {index + 1} / {items.length}
+            </div>
+          )}
+
+          {/* Zoom hint for images */}
+          {current.type === "image" && (
+            <div className="absolute bottom-3 left-3 z-10 text-xs bg-black/40 text-white/80 px-2 py-1 rounded-full backdrop-blur-sm flex items-center gap-1.5">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              Click to expand
+            </div>
+          )}
+        </div>
+
+        {/* Caption */}
+        {current.type !== "youtube" && current.caption && (
+          <p className="mt-3 text-slate-400 dark:text-slate-500 text-xs text-center leading-relaxed">{current.caption}</p>
+        )}
+
+        {/* Dot indicators */}
+        {items.length > 1 && (
+          <div className="flex justify-center gap-1.5 mt-4">
+            {items.map((_, i) => (
+              <button key={i} onClick={() => go(i)}
+                className={`rounded-full transition-all duration-300 ${i === index
+                  ? "w-5 h-1.5 bg-blue-800 dark:bg-blue-400"
+                  : "w-1.5 h-1.5 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-500"}`} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* ── Lightbox ── */}
+      <AnimatePresence>
+        {lightbox !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/92 backdrop-blur-sm"
+            onClick={() => setLightbox(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.88, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.88, opacity: 0 }}
+              transition={{ duration: 0.28 }}
+              className="relative max-w-5xl w-full mx-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={`${BASE}/projects/${slug}/${(items[lightbox] as Extract<MediaItem, { type: "image" }>).file}`}
+                alt={(items[lightbox] as Extract<MediaItem, { type: "image" }>).caption ?? `${title} — image ${lightbox + 1}`}
+                className="w-full max-h-[85vh] object-contain rounded-xl"
+              />
+              {(items[lightbox] as Extract<MediaItem, { type: "image" }>).caption && (
+                <p className="text-white/60 text-sm text-center mt-4">
+                  {(items[lightbox] as Extract<MediaItem, { type: "image" }>).caption}
+                </p>
+              )}
+
+              {/* Close */}
+              <button onClick={() => setLightbox(null)}
+                className="absolute -top-4 -right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-200">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+
+              {/* Lightbox arrows */}
+              {items.filter(it => it.type === "image").length > 1 && (
+                <>
+                  <button
+                    onClick={() => setLightbox((l) => l !== null ? (l - 1 + items.length) % items.length : l)}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-200">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                  </button>
+                  <button
+                    onClick={() => setLightbox((l) => l !== null ? (l + 1) % items.length : l)}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-200">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+function MediaSlide({ item, slug, title, index, onImageClick }:
+  { item: MediaItem; slug: string; title: string; index: number; onImageClick: () => void }) {
+  if (item.type === "image") {
+    return (
+      <button className="w-full h-full cursor-zoom-in" onClick={onImageClick}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`${BASE}/projects/${slug}/${item.file}`}
+          alt={item.caption ?? `${title} — image ${index + 1}`}
+          className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500"
+        />
+      </button>
+    );
+  }
+  if (item.type === "video") {
+    return (
+      <video src={`${BASE}/projects/${slug}/${item.file}`} controls className="w-full h-full" />
+    );
+  }
+  return (
+    <iframe
+      src={`https://www.youtube.com/embed/${item.id}`}
+      title={item.caption ?? `${title} — video ${index + 1}`}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+      className="w-full h-full"
+    />
+  );
+}
+
+// ── Main page ─────────────────────────────────────────────────────
 export default function ProjectPageClient({ project }: { project: Project }) {
   return (
     <div className="min-h-screen bg-white dark:bg-[#080d1a] texture-paper">
@@ -72,29 +277,24 @@ export default function ProjectPageClient({ project }: { project: Project }) {
       {/* Sections */}
       <div className="max-w-3xl mx-auto px-6 py-24 space-y-28">
 
-        {/* Problem */}
         {project.problem && (
           <motion.section {...fadeUp(0.05)}>
             <SectionLabel index="01" label="The Problem" />
             <div className="pl-0 md:pl-12">
-              <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg font-light whitespace-pre-line space-y-4">
-                {project.problem.split("\n\n").map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
+              <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg font-light space-y-4">
+                {project.problem.split("\n\n").map((para, i) => <p key={i}>{para}</p>)}
               </div>
             </div>
           </motion.section>
         )}
 
-        {/* Goals */}
         {project.goals && project.goals.length > 0 && (
           <motion.section {...fadeUp(0.08)}>
             <SectionLabel index="02" label="Goals" />
             <div className="pl-0 md:pl-12 space-y-3">
               {project.goals.map((goal, i) => (
                 <motion.div key={i}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 + i * 0.07 }}
                   className="group flex gap-4 p-4 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-slate-800 hover:bg-slate-50/80 dark:hover:bg-slate-900/60 transition-all duration-300">
                   <span className="text-blue-800/50 dark:text-blue-500/50 font-mono text-sm mt-0.5 shrink-0 w-5 text-right">{String(i + 1).padStart(2, "0")}</span>
@@ -105,23 +305,19 @@ export default function ProjectPageClient({ project }: { project: Project }) {
           </motion.section>
         )}
 
-        {/* My Role */}
         {project.myRole && (
           <motion.section {...fadeUp(0.1)}>
             <SectionLabel index="03" label="My Role" />
             <div className="pl-0 md:pl-12">
               <div className="p-6 rounded-2xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
                 <div className="text-slate-600 dark:text-slate-300 leading-relaxed font-light space-y-4">
-                  {project.myRole.split("\n\n").map((para, i) => (
-                    <p key={i}>{para}</p>
-                  ))}
+                  {project.myRole.split("\n\n").map((para, i) => <p key={i}>{para}</p>)}
                 </div>
               </div>
             </div>
           </motion.section>
         )}
 
-        {/* Process */}
         {project.process && project.process.length > 0 && (
           <motion.section {...fadeUp(0.12)}>
             <SectionLabel index="04" label="The Process" />
@@ -129,8 +325,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
               <div className="absolute left-[7px] top-2 bottom-0 w-px bg-gradient-to-b from-blue-900/25 via-blue-900/10 to-transparent dark:from-blue-500/25 dark:via-blue-500/10" />
               {project.process.map((step, i) => (
                 <motion.div key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.55, delay: 0.1 + i * 0.08 }}
                   className="group relative pl-10 pb-10 last:pb-0">
                   <div className="absolute left-0 top-1 w-[15px] h-[15px] rounded-full bg-blue-900 dark:bg-blue-500 ring-4 ring-white dark:ring-[#080d1a] flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -146,7 +341,6 @@ export default function ProjectPageClient({ project }: { project: Project }) {
           </motion.section>
         )}
 
-        {/* Outcome */}
         {project.outcome && (
           <motion.section {...fadeUp(0.14)}>
             <SectionLabel index="05" label="Outcome & Results" />
@@ -154,59 +348,18 @@ export default function ProjectPageClient({ project }: { project: Project }) {
               <div className="relative p-6 rounded-2xl bg-slate-900 dark:bg-white/5 border border-slate-800 dark:border-white/10">
                 <div className="absolute top-4 left-4 w-1 h-8 rounded-full bg-blue-500 dark:bg-blue-400 opacity-60" />
                 <div className="pl-5 text-slate-300 dark:text-slate-300 leading-relaxed font-light space-y-4">
-                  {project.outcome.split("\n\n").map((para, i) => (
-                    <p key={i}>{para}</p>
-                  ))}
+                  {project.outcome.split("\n\n").map((para, i) => <p key={i}>{para}</p>)}
                 </div>
               </div>
             </div>
           </motion.section>
         )}
 
-        {/* Gallery */}
-        {(project.media && project.media.length > 0) && (
+        {project.media && project.media.length > 0 && (
           <motion.section {...fadeUp(0.16)}>
             <SectionLabel index="06" label="Gallery" />
             <div className="pl-0 md:pl-12">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {project.media.map((item, i) => (
-                  <div key={i} className="flex flex-col gap-2">
-                    {item.type === "image" && (
-                      <div className="group aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 cursor-zoom-in">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={`${BASE}/projects/${project.slug}/${item.file}`}
-                          alt={item.caption ?? `${project.title} — image ${i + 1}`}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                    )}
-                    {item.type === "video" && (
-                      <div className="aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-900">
-                        <video
-                          src={`${BASE}/projects/${project.slug}/${item.file}`}
-                          controls
-                          className="w-full h-full"
-                        />
-                      </div>
-                    )}
-                    {item.type === "youtube" && (
-                      <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800">
-                        <iframe
-                          src={`https://www.youtube.com/embed/${item.id}`}
-                          title={item.caption ?? `${project.title} — video ${i + 1}`}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="absolute inset-0 w-full h-full"
-                        />
-                      </div>
-                    )}
-                    {item.caption && (
-                      <p className="text-slate-400 dark:text-slate-500 text-xs text-center leading-relaxed">{item.caption}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <MediaGallery items={project.media} slug={project.slug} title={project.title} />
             </div>
           </motion.section>
         )}

@@ -36,7 +36,7 @@ export default function Hero() {
           transition={{ delay: 0.3, duration: 0.7 }}
           className="text-6xl md:text-8xl font-light text-slate-900 tracking-tight mb-6"
         >
-          Your Name
+         Omar Lemkecher
         </motion.h1>
 
         <motion.p

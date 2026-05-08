@@ -1,0 +1,72 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+
+const skillGroups = [
+  {
+    category: "Engineering",
+    skills: ["Aerodynamics", "Propulsion", "Structural Analysis", "Flight Mechanics", "CFD"],
+  },
+  {
+    category: "Software & Tools",
+    skills: ["MATLAB", "Python", "C++", "ANSYS", "SolidWorks", "OpenFOAM"],
+  },
+  {
+    category: "Methods",
+    skills: ["FEA", "Numerical Methods", "Control Systems", "Signal Processing", "LaTeX"],
+  },
+];
+
+export default function Skills() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section id="skills" className="py-32 px-6 bg-slate-50">
+      <div className="max-w-4xl mx-auto" ref={ref}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+        >
+          <p className="text-blue-900 text-xs font-medium tracking-[0.2em] uppercase mb-3">
+            Capabilities
+          </p>
+          <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-16 tracking-tight">
+            Skills
+          </h2>
+        </motion.div>
+
+        <div className="space-y-12">
+          {skillGroups.map((group, gi) => (
+            <motion.div
+              key={group.category}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.15 * gi }}
+            >
+              <p className="text-xs text-slate-400 tracking-widest uppercase mb-4">
+                {group.category}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {group.skills.map((skill, si) => (
+                  <motion.span
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.4, delay: 0.15 * gi + 0.05 * si }}
+                    className="px-4 py-2 bg-white border border-slate-200 text-slate-600 text-sm rounded-full hover:border-blue-900/30 hover:text-blue-900 transition-colors duration-200"
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

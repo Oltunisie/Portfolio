@@ -38,7 +38,7 @@ export default function Contact() {
             href="mailto:your@email.com"
             className="px-8 py-4 bg-slate-900 text-white text-sm tracking-wide rounded-full hover:bg-blue-900 transition-colors duration-300"
           >
-            your@email.com
+           olemkecher@gmail.com
           </a>
           <a
             href="https://github.com/Oltunisie"
@@ -52,7 +52,7 @@ export default function Contact() {
             GitHub
           </a>
           <a
-            href="https://linkedin.com/in/yourprofile"
+            href="https://www.linkedin.com/in/omar-lemkecher-b02765365/?locale=fr"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 border border-slate-200 text-slate-600 text-sm tracking-wide rounded-full hover:border-slate-400 transition-colors duration-300 flex items-center justify-center gap-2"

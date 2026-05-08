@@ -4,9 +4,9 @@ export type ProcessStep = {
 };
 
 export type MediaItem =
-  | { type: "image"; file: "FeedSystems_HF2"; caption?: "FeedSystem"}
-  | { type: "video"; file: "HF2_group"; caption?: "Prometheus team" }    // local .mp4/.webm in public/projects/<slug>/
-  | { type: "video", file: "HF2.mp4", caption: "Test campaign footage" };   // YouTube video ID e.g. "dQw4w9WgXcQ"
+  | { type: "image"; file: string; caption?: string }
+  | { type: "video"; file: string; caption?: string }    // local .mp4/.webm in public/projects/<slug>/
+  | { type: "youtube"; id: string; caption?: string };   // YouTube video ID e.g. "dQw4w9WgXcQ"
 
 export type Project = {
   slug: string;

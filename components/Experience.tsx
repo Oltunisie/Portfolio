@@ -53,7 +53,7 @@ export default function Experience() {
       <div className="max-w-4xl mx-auto" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 24 }} animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: "easeOut" }}>
+          transition={{ duration: 0.7 }}>
           <p className="text-blue-800 dark:text-blue-400 text-xs font-medium tracking-[0.2em] uppercase mb-3">Background</p>
           <h2 className="text-4xl md:text-5xl font-light text-slate-900 dark:text-white mb-16 tracking-tight">Experience</h2>
         </motion.div>
@@ -64,7 +64,7 @@ export default function Experience() {
             {experiences.map((exp, i) => (
               <motion.div key={exp.role}
                 initial={{ opacity: 0, x: -24 }} animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.65, delay: 0.1 + 0.12 * i, ease: "easeOut" }}
+                transition={{ duration: 0.65, delay: 0.1 + 0.12 * i }}
                 className="group relative pl-10 pb-12">
                 <div className="absolute left-0 top-1.5 w-[15px] h-[15px] rounded-full bg-blue-900 dark:bg-blue-500 ring-4 ring-slate-50 dark:ring-[#080d1a] group-hover:scale-110 transition-transform duration-300" />
                 <div className="p-5 rounded-xl border border-transparent group-hover:border-slate-100 dark:group-hover:border-slate-800 group-hover:bg-slate-50/70 dark:group-hover:bg-slate-900/50 transition-all duration-300">
@@ -92,7 +92,7 @@ export default function Experience() {
         {/* Achievements */}
         <motion.div
           initial={{ opacity: 0, y: 24 }} animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
+          transition={{ duration: 0.7, delay: 0.45 }}
           className="mt-20">
           <p className="text-blue-800 dark:text-blue-400 text-xs font-medium tracking-[0.2em] uppercase mb-3">Recognition</p>
           <h3 className="text-3xl font-light text-slate-900 dark:text-white mb-10 tracking-tight">Achievements</h3>
@@ -100,7 +100,7 @@ export default function Experience() {
             {achievements.map((a, i) => (
               <motion.div key={a.title}
                 initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.5 + 0.1 * i, ease: "easeOut" }}
+                transition={{ duration: 0.55, delay: 0.5 + 0.1 * i }}
                 whileHover={{ y: -3 }}
                 className="group p-6 border border-slate-100 dark:border-slate-800 rounded-2xl hover:border-blue-900/20 dark:hover:border-blue-500/25 hover:shadow-md dark:hover:shadow-blue-950/20 hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 cursor-default">
                 <p className="text-xs text-blue-800 dark:text-blue-400 tracking-widest uppercase mb-2">{a.period}</p>

@@ -8,7 +8,7 @@ import { Project } from "@/data/projects";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.65, delay, ease: "easeOut" },
+  transition: { duration: 0.65, delay },
 });
 
 export default function ProjectPageClient({ project }: { project: Project }) {
@@ -94,7 +94,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                 <motion.div key={i}
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.07, ease: "easeOut" }}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.07 }}
                   className="group flex gap-4 p-4 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-slate-800 hover:bg-slate-50/80 dark:hover:bg-slate-900/60 transition-all duration-300">
                   <span className="text-blue-800/50 dark:text-blue-500/50 font-mono text-sm mt-0.5 shrink-0 w-5 text-right">{String(i + 1).padStart(2, "0")}</span>
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{goal}</p>
@@ -130,7 +130,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                 <motion.div key={i}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.55, delay: 0.1 + i * 0.08, ease: "easeOut" }}
+                  transition={{ duration: 0.55, delay: 0.1 + i * 0.08 }}
                   className="group relative pl-10 pb-10 last:pb-0">
                   <div className="absolute left-0 top-1 w-[15px] h-[15px] rounded-full bg-blue-900 dark:bg-blue-500 ring-4 ring-white dark:ring-[#080d1a] flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <span className="text-white text-[8px] font-bold">{i + 1}</span>

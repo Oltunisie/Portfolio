@@ -6,7 +6,7 @@ import { useRef } from "react";
 const items = [
   { label: "University", value: "UCLA — University of California, Los Angeles" },
   { label: "Degree", value: "B.S. Aerospace Engineering" },
-  { label: "Expected Graduation", value: "2028 · GPA 4.0" },
+  { label: "Expected Graduation", value: "2028" },
   { label: "Focus Areas", value: "Propulsion · Structures · ADCS · Feed Systems" },
 ];
 

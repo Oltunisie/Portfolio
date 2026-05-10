@@ -2,8 +2,11 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Project, MediaItem } from "@/data/projects";
+
+const ModelViewer = dynamic(() => import("./ModelViewer"), { ssr: false });
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -203,6 +206,14 @@ function MediaSlide({ item, slug, title, index, onImageClick }:
   if (item.type === "video") {
     return (
       <video src={`${BASE}/projects/${slug}/${item.file}`} controls className="w-full h-full" />
+    );
+  }
+  if (item.type === "model") {
+    return (
+      <ModelViewer
+        src={`${BASE}/projects/${slug}/${item.file}`}
+        alt={item.caption ?? `${title} — 3D model`}
+      />
     );
   }
   return (

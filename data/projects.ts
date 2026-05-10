@@ -4,9 +4,10 @@ export type ProcessStep = {
 };
 
 export type MediaItem =
-  | { type: "image"; file: string; caption?: string }
-  | { type: "video"; file: string; caption?: string }    // local .mp4/.webm in public/projects/<slug>/
-  | { type: "youtube"; id: string; caption?: string };   // YouTube video ID e.g. "dQw4w9WgXcQ"
+  | { type: "image";   file: string; caption?: string }
+  | { type: "video";   file: string; caption?: string }    // local .mp4/.webm in public/projects/<slug>/
+  | { type: "youtube"; id: string;   caption?: string }    // YouTube video ID e.g. "dQw4w9WgXcQ"
+  | { type: "model";   file: string; caption?: string };   // local .glb in public/projects/<slug>/
 
 export type Project = {
   slug: string;

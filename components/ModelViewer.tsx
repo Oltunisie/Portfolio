@@ -32,7 +32,13 @@ export default function ModelViewer({ src, alt }: { src: string; alt: string }) 
       auto-rotate
       shadow-intensity={1}
       exposure={0.9}
-      style={{ width: "100%", height: "100%", background: "transparent" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "transparent",
+        // @ts-expect-error model-viewer CSS custom property
+        "--mv-background-color": "transparent",
+      }}
     />
   );
 }

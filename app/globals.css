@@ -75,6 +75,12 @@ html {
   background-size: 32px 32px;
 }
 
+/* model-viewer transparent background */
+model-viewer {
+  background-color: transparent !important;
+  --mv-background-color: transparent !important;
+}
+
 /* Selection color */
 ::selection {
   background: rgba(30, 58, 95, 0.12);

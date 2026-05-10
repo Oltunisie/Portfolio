@@ -98,6 +98,7 @@ The system is on track to support a full static fire campaign ahead of the launc
       { type: "image", file: "horizon.jpg" },
       { type: "image", file: "setup.jpg" }, 
       { type: "image", file: "FeedSystems_HF2.jpg" },
+      { type: "model", file: "Prometheus Feed System 2026.glb", caption: "Prometheus Feed System 2026 — interactive 3D model" },
     ],
   },
 

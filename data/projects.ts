@@ -7,8 +7,7 @@ export type MediaItem =
   | { type: "image";   file: string; caption?: string }
   | { type: "video";   file: string; caption?: string }    // local .mp4/.webm in public/projects/<slug>/
   | { type: "youtube"; id: string;   caption?: string }    // YouTube video ID e.g. "dQw4w9WgXcQ"
-  | { type: "model";   file: string; caption?: string }
-  | { type: "model", file: "Prometheus Feed System 2026.glb" };   // local .glb in public/projects/<slug>/
+  | { type: "model";   file: string; caption?: string };   // local .glb in public/projects/<slug>/
 
 export type Project = {
   slug: string;
@@ -25,6 +24,7 @@ export type Project = {
   myRole?: string;
   process?: ProcessStep[];
   outcome?: string;
+  model3d?: string;        // .glb filename in public/projects/<slug>/
   // Drop files in public/projects/<slug>/ then list them here
   media?: MediaItem[];
 };
@@ -90,6 +90,8 @@ On the test side, I built the cold-flow test setup, led the hydrostatic proof te
 
 The system is on track to support a full static fire campaign ahead of the launch targeting the 20,000 ft altitude record — which would be the highest apogee in Rocket Project UCLA's history.`,
 
+    model3d: "Prometheus Feed System 2026.glb",
+
     media: [
       { type: "image", file: "fire.jpg" },
       { type: "image", file: "HF2_group.jpg" },
@@ -98,7 +100,6 @@ The system is on track to support a full static fire campaign ahead of the launc
       { type: "image", file: "horizon.jpg" },
       { type: "image", file: "setup.jpg" }, 
       { type: "image", file: "FeedSystems_HF2.jpg" },
-      { type: "model", file: "Prometheus Feed System 2026.glb", caption: "Prometheus Feed System 2026 — interactive 3D model" },
     ],
   },
 

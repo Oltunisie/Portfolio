@@ -366,9 +366,27 @@ export default function ProjectPageClient({ project }: { project: Project }) {
           </motion.section>
         )}
 
+        {project.model3d && (
+          <motion.section {...fadeUp(0.15)}>
+            <SectionLabel index="06" label="3D Model" />
+            <div className="pl-0 md:pl-12">
+              <div className="relative w-full rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900" style={{ height: "480px" }}>
+                <ModelViewer
+                  src={`${BASE}/projects/${project.slug}/${project.model3d}`}
+                  alt={`${project.title} — 3D model`}
+                />
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs bg-black/40 text-white/70 px-3 py-1 rounded-full backdrop-blur-sm pointer-events-none flex items-center gap-1.5">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 15l6 6m-6-6v4.8m0-4.8h4.8"/><path d="M9 19.8V15m0 0H4.2M9 15l-6 6"/><path d="M15 4.2V9m0 0h4.8M15 9l6-6"/><path d="M9 4.2V9m0 0H4.2M9 9L3 3"/></svg>
+                  Drag to rotate · Scroll to zoom
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        )}
+
         {project.media && project.media.length > 0 && (
           <motion.section {...fadeUp(0.16)}>
-            <SectionLabel index="06" label="Gallery" />
+            <SectionLabel index="07" label="Gallery" />
             <div className="pl-0 md:pl-12">
               <MediaGallery items={project.media} slug={project.slug} title={project.title} />
             </div>

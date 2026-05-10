@@ -212,7 +212,7 @@ function MediaSlide({ item, slug, title, index, onImageClick }:
     return (
       <ModelViewer
         src={`${BASE}/projects/${slug}/${item.file}`}
-        alt={item.caption ?? `${title} — 3D model`}
+        alt={(item as { caption?: string }).caption ?? `${title} — 3D model`}
       />
     );
   }

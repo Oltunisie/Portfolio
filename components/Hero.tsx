@@ -1,27 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import ParticleBackground from "./ParticleBackground";
-
-const BG_IMAGE = "/hero-bg.jpg";
-const BLUR_AMOUNT = "6px";
-const OVERLAY_OPACITY_LIGHT = 0.55;
-const OVERLAY_OPACITY_DARK = 0.75;
 
 export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-950 dark:via-[#080d1a] dark:to-slate-900">
       <ParticleBackground />
-
-      <div className="absolute inset-0 scale-110" style={{ zIndex: 0 }}>
-        <Image src={BG_IMAGE} alt="" fill priority className="object-cover"
-          style={{ filter: `blur(${BLUR_AMOUNT})` }} onError={() => {}} />
-      </div>
-      <div className="absolute inset-0 block dark:hidden"
-        style={{ backgroundColor: `rgba(255,255,255,${OVERLAY_OPACITY_LIGHT})`, zIndex: 2 }} />
-      <div className="absolute inset-0 hidden dark:block"
-        style={{ backgroundColor: `rgba(8,13,26,${OVERLAY_OPACITY_DARK})`, zIndex: 2 }} />
 
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }} className="relative z-10">
@@ -51,7 +36,7 @@ export default function Hero() {
             className="px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm tracking-wide rounded-full hover:bg-blue-900 dark:hover:bg-slate-100 transition-colors duration-300">
             View Projects
           </button>
-          <a href="/Portfolio/resume.pdf" target="_blank" rel="noopener noreferrer"
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
             className="px-8 py-3 bg-blue-900 dark:bg-blue-600 text-white text-sm tracking-wide rounded-full hover:bg-blue-800 dark:hover:bg-blue-500 transition-colors duration-300 flex items-center gap-2">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>

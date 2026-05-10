@@ -113,8 +113,8 @@ function MediaGallery({ items, slug, title }: { items: MediaItem[]; slug: string
         </div>
 
         {/* Caption */}
-        {current.type !== "youtube" && current.caption && (
-          <p className="mt-3 text-slate-400 dark:text-slate-500 text-xs text-center leading-relaxed">{current.caption}</p>
+        {"caption" in current && current.caption && (
+          <p className="mt-3 text-slate-400 dark:text-slate-500 text-xs text-center leading-relaxed">{current.caption as string}</p>
         )}
 
         {/* Dot indicators */}

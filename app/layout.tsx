@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Omar Lemkecher — Aerospace Engineering",
   description: "Portfolio of Omar Lemkecher, Aerospace Engineering student at UCLA.",
-  icons: { icon: "/Portfolio-Website/favicon.svg" },
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({
